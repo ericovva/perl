@@ -1,16 +1,13 @@
 #!/usr/bin/env perl 
-use 5.010;  # for say, given/when
+use 5.010; 
 use strict;
 use warnings;
 use Getopt::Long;
-#use strict;
-#use warnings;
 use Data::Printer;
 #BEGIN { push(@INC, '/lib/'); }
 use lib::Local::Hashmaker;
 use lib::Local::Sort_and_filter;
 use lib::Local::DrawTable;
-#--band 'Midas Fall' --sort track --columns year,band,album,track,year
 my $band = '';   
 my $sort = '';
 my $columns = 'default';
@@ -27,23 +24,23 @@ GetOptions ('band=s' => \$band,
 			'track=s' => \$track
 			);
 #print "$band, $sort $columns\n";
-my @ar1;
+my @music;
 while (<>) {
-	my %h = make_hash($_);
-	if (%h){
-		push (@ar1, \%h);	
+	my %entity = make_hash($_);
+	if (%entity){
+		push (@music, \%entity);	
 	}
 
 }
-	#p @ar1; 
+	#p @music; 
 {
 	package Sort_and_filter;
-	if (@ar1){
-			my_sort(\@ar1,$sort);
-			my $length_hash = filter(\@ar1,$band,$year,$album,$track,$format);
+	if (@music){
+			my_sort(\@music,$sort);
+			my $length_hash = filter(\@music,$band,$year,$album,$track,$format);
 			#p %$length_hash;
 
-			DrawTable::draw(\@ar1,\%$length_hash,$columns);
+			DrawTable::draw(\@music,\%$length_hash,$columns);
 	}
 
 }
