@@ -9,7 +9,7 @@ BEGIN{
 		use warnings::register;
 	}
 }
-no strict; no warnings;
+#no strict; no warnings;
 sub make_space{
 	my ($str,$max_len) = @_;
 	if (length $str < $max_len){
@@ -22,8 +22,10 @@ sub make_space{
 
 sub draw{
 	my ($arr_ref,$hash_length,$columns) = @_;
-	if ($columns eq '') {
+	if ($columns eq "default") {
 		$columns= "band,year,album,track,format";
+	} elsif ($columns eq ''){ return;
+
 	}
 	my @cols = split m{[,]}, $columns;
 	my $width = 0;
@@ -34,11 +36,16 @@ sub draw{
 		next if $c =~ /^\s*$/;
 		$c =~ s/^\s+//;
 		$c =~ s/\s+$//;
-		$width += ${$hash_length}{$c} + 3;
-		for (0..${$hash_length}{$c} + 2 - 1) {
-  			$mid = $mid . "-";
+		if (${$hash_length}{$c}){
+			$width +=  (${$hash_length}{$c}) + 3;
+			for (0..${$hash_length}{$c} + 2 - 1) {
+	  			$mid = $mid . "-";
+			}
+			$mid = $mid . "+";
+
 		}
-		$mid = $mid . "+";
+		else {return;}
+		
 		# print ${$hash_length}{$c} + 3 . $c . "\n";
 	}
 	$width += 1;

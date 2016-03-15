@@ -13,7 +13,7 @@ use lib::Local::DrawTable;
 #--band 'Midas Fall' --sort track --columns year,band,album,track,year
 my $band = '';   
 my $sort = '';
-my $columns = '';
+my $columns = 'default';
 my $format ='';      
 my $album = '';
 my $year = '';
@@ -30,16 +30,22 @@ GetOptions ('band=s' => \$band,
 my @ar1;
 while (<>) {
 	my %h = make_hash($_);
-	push (@ar1, \%h);
+	if (%h){
+		push (@ar1, \%h);	
+	}
+
 }
 	#p @ar1; 
 {
 	package Sort_and_filter;
-	my_sort(\@ar1,$sort);
-	my $length_hash = filter(\@ar1,$band,$year,$album,$track,$format);
-	#p %$length_hash;
+	if (@ar1){
+			my_sort(\@ar1,$sort);
+			my $length_hash = filter(\@ar1,$band,$year,$album,$track,$format);
+			#p %$length_hash;
 
-	DrawTable::draw(\@ar1,\%$length_hash,$columns);
+			DrawTable::draw(\@ar1,\%$length_hash,$columns);
+	}
+
 }
 
 	

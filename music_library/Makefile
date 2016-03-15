@@ -190,20 +190,20 @@ TO_INST_PM = lib/.DS_Store \
 	lib/Local/Sort.pm \
 	lib/Local/Sort_and_filter.pm
 
-PM_TO_BLIB = lib/Local/.DS_Store \
-	blib/lib/Local/.DS_Store \
-	lib/Local/DrawTable.pm \
-	blib/lib/Local/DrawTable.pm \
-	lib/Local/Hashmaker.pm \
+PM_TO_BLIB = lib/Local/Hashmaker.pm \
 	blib/lib/Local/Hashmaker.pm \
+	lib/Local/.DS_Store \
+	blib/lib/Local/.DS_Store \
 	lib/Local/Sort_and_filter.pm \
 	blib/lib/Local/Sort_and_filter.pm \
-	lib/Local/Sort.pm \
-	blib/lib/Local/Sort.pm \
 	lib/Local/MusicLibrary.pm \
 	blib/lib/Local/MusicLibrary.pm \
+	lib/Local/DrawTable.pm \
+	blib/lib/Local/DrawTable.pm \
 	lib/.DS_Store \
-	blib/lib/.DS_Store
+	blib/lib/.DS_Store \
+	lib/Local/Sort.pm \
+	blib/lib/Local/Sort.pm
 
 
 # --- MakeMaker platform_constants section:
@@ -470,22 +470,22 @@ clean_subdirs :
 
 clean :: clean_subdirs
 	- $(RM_F) \
-	  *perl.core core.[0-9][0-9] \
-	  perl$(EXE_EXT) $(INST_ARCHAUTODIR)/extralibs.all \
-	  $(BASEEXT).x core \
-	  *$(LIB_EXT) $(BASEEXT).def \
-	  mon.out perlmain.c \
-	  pm_to_blib perl.exe \
-	  $(BASEEXT).bso pm_to_blib.ts \
-	  core.[0-9] MYMETA.json \
-	  *$(OBJ_EXT) core.[0-9][0-9][0-9] \
-	  core.[0-9][0-9][0-9][0-9][0-9] perl \
-	  $(MAKE_APERL_FILE) $(BASEEXT).exp \
-	  $(INST_ARCHAUTODIR)/extralibs.ld MYMETA.yml \
-	  $(BOOTSTRAP) core.*perl.*.? \
-	  core.[0-9][0-9][0-9][0-9] so_locations \
-	  tmon.out lib$(BASEEXT).def \
-	  blibdirs.ts 
+	  lib$(BASEEXT).def pm_to_blib.ts \
+	  $(BOOTSTRAP) so_locations \
+	  *$(OBJ_EXT) perlmain.c \
+	  $(INST_ARCHAUTODIR)/extralibs.ld mon.out \
+	  core.*perl.*.? blibdirs.ts \
+	  $(MAKE_APERL_FILE) MYMETA.yml \
+	  $(BASEEXT).x core.[0-9][0-9][0-9][0-9] \
+	  core.[0-9][0-9][0-9][0-9][0-9] $(BASEEXT).def \
+	  MYMETA.json $(BASEEXT).bso \
+	  pm_to_blib core.[0-9] \
+	  perl core.[0-9][0-9] \
+	  *$(LIB_EXT) core.[0-9][0-9][0-9] \
+	  $(INST_ARCHAUTODIR)/extralibs.all perl$(EXE_EXT) \
+	  $(BASEEXT).exp *perl.core \
+	  tmon.out perl.exe \
+	  core 
 	- $(RM_RF) \
 	  blib 
 	- $(MV) $(FIRST_MAKEFILE) $(MAKEFILE_OLD) $(DEV_NULL)
@@ -878,13 +878,13 @@ ppd :
 
 pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', q[$(PM_FILTER)], '\''$(PERM_DIR)'\'')' -- \
-	  lib/Local/.DS_Store blib/lib/Local/.DS_Store \
-	  lib/Local/DrawTable.pm blib/lib/Local/DrawTable.pm \
 	  lib/Local/Hashmaker.pm blib/lib/Local/Hashmaker.pm \
+	  lib/Local/.DS_Store blib/lib/Local/.DS_Store \
 	  lib/Local/Sort_and_filter.pm blib/lib/Local/Sort_and_filter.pm \
-	  lib/Local/Sort.pm blib/lib/Local/Sort.pm \
 	  lib/Local/MusicLibrary.pm blib/lib/Local/MusicLibrary.pm \
-	  lib/.DS_Store blib/lib/.DS_Store 
+	  lib/Local/DrawTable.pm blib/lib/Local/DrawTable.pm \
+	  lib/.DS_Store blib/lib/.DS_Store \
+	  lib/Local/Sort.pm blib/lib/Local/Sort.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
 

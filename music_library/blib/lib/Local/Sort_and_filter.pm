@@ -9,7 +9,7 @@ BEGIN{
 		use warnings::register;
 	}
 }
-no strict; no warnings;
+#no strict; no warnings;
 no warnings 'experimental';
 sub my_sort{
 	my ($arr_ref,$sort_key) = @_;
