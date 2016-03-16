@@ -17,56 +17,43 @@ sub make_space{
 			$str = ' ' . $str;
 		}
 	}
-	print " " . $str . " ";
+	print ' ' . "$str" . ' ';
 }
 
 sub draw{
 	my ($arr_ref,$hash_length,$columns) = @_;
-	if ($columns eq "default") {
-		$columns= "band,year,album,track,format";
-	} elsif ($columns eq ''){ return;
-
-	}
+	if ($columns eq 'default') {
+		$columns= 'band,year,album,track,format';
+	} elsif ($columns eq ''){ return; }
 	my @cols = split m{[,]}, $columns;
 	my $width = 0;
-	my $start = "/";
-	my $mid = "|";
-	my $finish = "\\";
+	my $mid = '|';
 	for my $c(@cols){
 		next if $c =~ /^\s*$/;
 		$c =~ s/^\s+//;
 		$c =~ s/\s+$//;
 		if (${$hash_length}{$c}){
+			my $tmp = "-" x (${$hash_length}{$c} + 2);
 			$width +=  (${$hash_length}{$c}) + 3;
-			for (0..${$hash_length}{$c} + 2 - 1) {
-	  			$mid = $mid . "-";
-			}
-			$mid = $mid . "+";
-
+			$mid = "$mid" . "$tmp" . '+';
 		}
 		else {return;}
-		
-		# print ${$hash_length}{$c} + 3 . $c . "\n";
 	}
 	$width += 1;
-	for (0..$width - 3) {
-  		$start = $start . "-";
-  		$finish = $finish . "-";
-	}
-	$start = $start . "\\\n";
-	$finish = $finish . "/\n";
+  	my $start = '/' . ('-' x ($width - 2)) . "\\\n";
+  	my $finish = "\\" . ('-' x ($width - 2)) . "/\n";
 	chop $mid; $mid = $mid . "|\n";
 	my $first = 1;
 	for my $i (0..$#{$arr_ref}) {
 		if (${$arr_ref}[$i]){
 			if ($first){ print $start; $first=0;}
-			print "|";
+			print '|';
 			for my $c(@cols){
 				next if $c =~ /^\s*$/;
 				$c =~ s/^\s+//;
 				$c =~ s/\s+$//;
 				make_space(${$arr_ref}[$i]-> {$c},${$hash_length}{$c});
-				print "|";
+				print '|';
 			}
 			print "\n";
 			if ($i!=$#{$arr_ref} ){
@@ -78,9 +65,5 @@ sub draw{
 
 		}
 	}
-
-	
-	
-
 }
 1;

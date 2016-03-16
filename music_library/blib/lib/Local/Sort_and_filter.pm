@@ -15,21 +15,21 @@ sub my_sort{
 	my ($arr_ref,$sort_key) = @_;
 	if ($sort_key){
 		given ($sort_key) {
-		when($sort_key eq "year"){
-			if (@$arr_ref){
-				 @$arr_ref = sort {$a->{$sort_key} <=> $b->{$sort_key}} @$arr_ref;
-		    	#p @$arr_ref;
+			when($sort_key eq 'year'){
+				if (@$arr_ref){
+					 @$arr_ref = sort {$a->{$sort_key} <=> $b->{$sort_key}} @$arr_ref;
+			    	#p @$arr_ref;
+				}
+			   
 			}
-		   
-		}
-		default {
-			if (@$arr_ref){
-				@$arr_ref = sort {$a->{$sort_key} cmp $b->{$sort_key}} @$arr_ref ;
+			default {
+				if (@$arr_ref){
+					@$arr_ref = sort {$a->{$sort_key} cmp $b->{$sort_key}} @$arr_ref ;
+				}
+				
+			    #p @$arr_ref;
 			}
-			
-		    #p @$arr_ref;
 		}
-	}
 
 	}
 	
@@ -37,7 +37,7 @@ sub my_sort{
 sub search{
 	my ($arr_ref,$i,$column,$column_value) = @_;
 	if ($column_value ne '') {  
-		if ($column eq "year"){
+		if ($column eq 'year'){
 			if (${$arr_ref}[$i] ->{$column} + 0 != $column_value){
 				return 0;
 			}
@@ -59,9 +59,9 @@ sub filter{
 	#   if ($band ne '') {  if ( $hash ->{"band"} ne $band ){ delete $hash;} }
 	# }
 	for my $i (0..$#{$arr_ref}) {
-		if (search($arr_ref,$i,"band",$band) && search($arr_ref,$i,"year",$year) &&
-		search($arr_ref,$i,"album",$album) && search($arr_ref,$i,"track",$track) &&
-		search($arr_ref,$i,"format",$format) ){
+		if (search($arr_ref,$i,'band',$band) && search($arr_ref,$i,'year',$year) &&
+		search($arr_ref,$i,'album',$album) && search($arr_ref,$i,'track',$track) &&
+		search($arr_ref,$i,'format',$format) ){
 			if (%length_hash){
 				if ($length_hash{'band'} < length ${$arr_ref}[$i] ->{'band'}){ 
 					$length_hash{'band'} =  length ${$arr_ref}[$i] ->{'band'};
