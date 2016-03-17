@@ -1,6 +1,7 @@
 use 5.010;  # for say, given/when
 use strict;
 use warnings;
+use Data::Printer;
 BEGIN{
 	if ($] < 5.018) {
 		package experimental;
@@ -11,22 +12,13 @@ no warnings 'experimental';
 use Data::Printer;
 sub make_hash{ 
 	my ($str) = @_;
-	my @arr = split m{[/.-]}, $str;
-	my %entity = ();
-	my $i = 0;
-	for my $elem (@arr) {
-		next if $elem =~ /^\s*$/;
-		$elem =~ s/^\s+//;
-		$elem =~ s/\s+$//;
-		given ($i){
-			when ($i == 0){ $entity{'band'} = $elem; }
-			when ($i == 1){ $entity{'year'} = $elem; }
-			when ($i == 2){ $entity{'album'} = $elem; }
-			when ($i == 3){ $entity{'track'} = $elem; }
-			when ($i == 4){ $entity{'format'} = $elem; }
-		}
-		$i++;
-	}
+	my (@ar) = split m{[/]}, $str;
+	my %entity; 
+	@entity{qw(band year album track format)} = (
+		$ar[1],
+		do{split m{[-]},$ar[2]},
+		do{split m{[.]},$ar[3]}
+		);
 	return %entity;
 }
 

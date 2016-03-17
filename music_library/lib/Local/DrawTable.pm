@@ -42,7 +42,8 @@ sub draw{
 	$width += 1;
   	my $start = '/' . ('-' x ($width - 2)) . "\\\n";
   	my $finish = "\\" . ('-' x ($width - 2)) . "/\n";
-	chop $mid; $mid = $mid . "|\n";
+	chop $mid; 
+	$mid = $mid . "|\n";
 	my $first = 1;
 	for my $i (0..$#{$arr_ref}) {
 		if (${$arr_ref}[$i]){
