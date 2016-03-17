@@ -11,13 +11,13 @@ BEGIN{
 no warnings 'experimental';
 use Data::Printer;
 sub make_hash{ 
-	my ($str) = @_;
-	my (@ar) = split m{[/]}, $str;
+	my ($str) = @_; 
+	my ($band,$year_album,$track_format) = split m{[/]}, (substr $str,2);
 	my %entity; 
 	@entity{qw(band year album track format)} = (
-		$ar[1],
-		do{split m{[-]},$ar[2]},
-		do{split m{[.]},$ar[3]}
+		$band,
+		do{split m{[-]},$year_album},
+		do{split m{[.]},$track_format}
 		);
 	return %entity;
 }
