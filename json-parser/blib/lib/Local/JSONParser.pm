@@ -34,12 +34,23 @@ sub parse_json {
             push (@ref_arr,\%new_hash);
             push(@state,"hash");
         }
+        
         if (/\G("[^"]+"\s*:)/gc) {
             my $ys = $1;
             $ys =~ s{\s}{}g;
             $ys =~ s{[":]}{}g;
             ##print "$ys 1\n";
             push (@keys,$ys);
+        }
+        elsif (/\G(true)/gc || /\G(null)/gc || /\G(false)/gc){
+            my $tmp = $1;
+            if ($state[$#state] eq "hash"){
+                ${$ref_arr[$#ref_arr]}{$keys[$#keys]} = $tmp;
+                pop (@keys);
+            }
+            elsif ($state[$#state] eq "ar"){
+                push(@{$ref_arr[$#ref_arr]},$tmp);
+            }
         }
         elsif (m{\G("(?:\\"|[^"])*")}gc){
             ##print "$1 2\n";
