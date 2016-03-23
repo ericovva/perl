@@ -51,7 +51,7 @@ sub parse_json {
                 $tmp =~ s{\\"}{"}g;
                     $tmp =~ s{\\t}{\t}g;
                     #$tmp =~ s{\\u(\d+)}{$1}g;
-                    $tmp =~ s{\\u(\d+)}{  encode('utf-8',chr(hex($1))) }ge;
+                    $tmp =~ s{\\u(\d+)}{  chr(hex($1)) }ge;
                     if ($state[$#state] eq "hash"){
                         ${$ref_arr[$#ref_arr]}{$keys[$#keys]} = $tmp;
                         pop (@keys);
