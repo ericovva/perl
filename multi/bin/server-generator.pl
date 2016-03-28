@@ -32,7 +32,7 @@ if(my $pid = fork()){
         if (sysread($client, $msg_len, 2) == 2){
             print("new connect\n");
             my $limit = unpack 'S', $msg_len;
-            print ("I must get $limit excersise\n");
+            print ("I must get $limit excercises\n");
             my $ex = Local::App::GenCalc::get($limit);
             syswrite($client, pack('L', scalar($ex)), 4);
             for my $val(@$ex){
